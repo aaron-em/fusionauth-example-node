@@ -3,11 +3,11 @@ const router = express.Router();
 const {FusionAuthClient} = require('@fusionauth/typescript-client');
 
 // tag::clientIdSecret[]
-const clientId = '85a03867-dccf-4882-adde-1a79aeec50df';
-const clientSecret = 'NkIKQ2MGx3uMBv3uGl9TyYud0MYfdBWCOk-cPQTjiAw';
+const clientId = '03f31d8b-3a6b-4ddc-b223-5adc22dd94ae';
+const clientSecret = 'fiX3knN3Xb4Pl7YvFWbVDFMfPMlbF7i8A-VeFJrpWoE';
 // end::clientIdSecret[]
 
-const fusionAuthURL = 'http://localhost:9011';
+const fusionAuthURL = 'https://auth.aaron-miller.me';
 const client = new FusionAuthClient('noapikeyneeded', fusionAuthURL);
 const pkceChallenge = require('pkce-challenge');
 
@@ -59,15 +59,17 @@ router.get('/oauth-redirect', function (req, res, next) {
           res.redirect(302, '/');
           return;
         }
-      
+
 // tag::setUserInSession[]
         req.session.user = response.response.user;
       })
+
+    console.log(JSON.stringify(req.session.user));
 // end::setUserInSession[]
       .then((response) => {
         res.redirect(302, '/');
       }).catch((err) => {console.log("in error"); console.error(JSON.stringify(err));});
-      
+
   // This code pushes the access and refresh tokens back to the browser as secure, HTTP-only cookies
   //     .then((response) => {
   //       res.cookie('access_token', response.response.access_token, {httpOnly: true});
